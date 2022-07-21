@@ -2,31 +2,58 @@ import {useAuth0} from '@auth0/auth0-react';
 import React, { useState } from 'react';
 import Axios from 'axios';
 
+Axios.defaults.timeout = 10000;
+
 const userDataExists = (user) =>{
     Axios.get('http://localhost:3001/checkifexists', {
-    id: user.sub,
+    id: JSON.stringify(user.sub),
   }).then((res) =>{
-      if(res){
-    return true;}
+      if(res.userid === JSON.stringify(user.sub)){
+    return true
+    }
+    else
+    {
+
+        return false
+    }
   })
 }
 
 
 
 const RegisterForm = (props) =>{
+    const [uName, setUName] = useState('')
+    const [uBio, setUBio] = useState('')
     function addUser() {
-        Axios.post('https://localhost:3001/adduser', {
-        id: props.id,
+        Axios.post('http://localhost:3001/create', {
+        id: props,
         username: uName,
         bio: uBio
         
-      }).then((res) =>{
+      }).then((err, res) =>{
+        if(err){
         console.log(res)
-      })
+        }
+        else{
+            console.log(err)
+        }
+      }).catch(error => {
+        if (error.response) {
+            // Request made and server responded
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+    });
       }
 
-    const [uName, setUName] = useState('')
-    const [uBio, setUBio] = useState('')
+    
     return(
         <>
         <form>
@@ -35,8 +62,6 @@ const RegisterForm = (props) =>{
             <label>Bio</label>
             <input type="text" onChange={(e) => setUBio(e.target.value)}/>
             <button onClick={addUser}>Submit</button>
-
-
         </form>
         </>
     )
@@ -90,7 +115,7 @@ export const Profile = () => {
             isAuthenticated &&(
                 !userDataExists(user) &&(
                     <div>
-                    <RegisterForm id={user.sub}/>
+                    <RegisterForm id={JSON.stringify(user.sub)}/>
                     </div>
                 )
               )
