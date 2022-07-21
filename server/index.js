@@ -30,7 +30,9 @@ app.post('/create', (req, res) => {
     const username = req.body.username;
     const bio = req.body.bio;
 
-
+    console.log(id);
+    console.log(username);
+    console.log(bio);
     db.query('INSERT INTO users (userid, username, bio) VALUES (?,?,?)', 
     [id, username, bio], (err, result) => {
         if(err){

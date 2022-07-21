@@ -6,9 +6,9 @@ Axios.defaults.timeout = 10000;
 
 const userDataExists = (user) =>{
     Axios.get('http://localhost:3001/checkifexists', {
-    id: JSON.stringify(user.sub),
+    id: JSON.stringify(user),
   }).then((res) =>{
-      if(res.userid === JSON.stringify(user.sub)){
+      if(res.userid === user){
     return true
     }
     else
@@ -26,11 +26,11 @@ const RegisterForm = (props) =>{
     const [uBio, setUBio] = useState('')
     function addUser() {
         Axios.post('http://localhost:3001/create', {
-        id: props,
+        id: props.id,
         username: uName,
-        bio: uBio
-        
-      }).then((err, res) =>{
+        bio: uBio  
+      },
+      {withCredentials: true}).then((err, res) =>{
         if(err){
         console.log(res)
         }
@@ -58,9 +58,9 @@ const RegisterForm = (props) =>{
         <>
         <form>
             <label>Username</label>
-            <input type="text" onChange={(e) => setUName(e.target.value)}/>
+            <input type="text" onChange={(event) => setUName(event.target.value)}/>
             <label>Bio</label>
-            <input type="text" onChange={(e) => setUBio(e.target.value)}/>
+            <input type="text" onChange={(event) => setUBio(event.target.value)}/>
             <button onClick={addUser}>Submit</button>
         </form>
         </>
@@ -102,7 +102,7 @@ export const Profile = () => {
     return(
 
             isAuthenticated && (
-                userDataExists(user) &&(
+                userDataExists(user.sub) &&(
                     <div>
                         <img src={user.picture} alt={user.name} />
                         <h2>{user.name}</h2>
@@ -113,9 +113,9 @@ export const Profile = () => {
             ),
             
             isAuthenticated &&(
-                !userDataExists(user) &&(
+                !userDataExists(user.sub) &&(
                     <div>
-                    <RegisterForm id={JSON.stringify(user.sub)}/>
+                    <RegisterForm id={user.sub}/>
                     </div>
                 )
               )
