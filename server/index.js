@@ -10,30 +10,28 @@ const db = mysql.createConnection({
     user: 'root',
     host: 'localhost',
     password: '',
-    database: 'twtclone',
+    database: 'twtclone'
 })
 
 
-app.get('/checkifexists', (req, res) =>{
-    const id = req.body.id
-    db.query("SELECT * FROM users WHERE userid=?", [id], (err, result) =>{
+app.get('/check:id', (req, res) =>{
+    const ident = req.params.id
+    db.query("SELECT * FROM users WHERE userid='"+ [req.params.id]+"'", (err, result) =>{
+        if(result !== null){
+            res.send(result)
+        }
         if(err){
             console.log(err)
-        }else{
-            res.send(result)
         }
     })
 })
 
 app.post('/create', (req, res) => {
+    
     const id = req.body.id;
     const username = req.body.username;
     const bio = req.body.bio;
-
-    console.log(id);
-    console.log(username);
-    console.log(bio);
-    db.query('INSERT INTO users (userid, username, bio) VALUES (?,?,?)', 
+    db.query("INSERT INTO users (userid, username, bio) VALUES (?,?,?)", 
     [id, username, bio], (err, result) => {
         if(err){
             console.log(err)

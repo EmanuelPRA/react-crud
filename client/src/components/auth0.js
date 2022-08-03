@@ -2,26 +2,7 @@ import {useAuth0} from '@auth0/auth0-react';
 import React, { useState } from 'react';
 import Axios from 'axios';
 
-Axios.defaults.timeout = 10000;
-
-const userDataExists = (user) =>{
-    Axios.get('http://localhost:3001/checkifexists', {
-    id: JSON.stringify(user),
-  }).then((res) =>{
-      if(res.userid === user){
-    return true
-    }
-    else
-    {
-
-        return false
-    }
-  })
-}
-
-
-
-const RegisterForm = (props) =>{
+export const RegisterForm = (props) =>{
     const [uName, setUName] = useState('')
     const [uBio, setUBio] = useState('')
     function addUser() {
@@ -29,39 +10,27 @@ const RegisterForm = (props) =>{
         id: props.id,
         username: uName,
         bio: uBio  
-      },
-      {withCredentials: true}).then((err, res) =>{
+      }).then((err, res) =>{
         if(err){
         console.log(res)
         }
         else{
             console.log(err)
         }
-      }).catch(error => {
-        if (error.response) {
-            // Request made and server responded
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-          }
-    });
+      })
       }
 
     
     return(
+        
         <>
-        <form>
+        <h1>Register</h1>
+        <form onSubmit ={ev =>{ev.preventDefault()}}>
             <label>Username</label>
             <input type="text" onChange={(event) => setUName(event.target.value)}/>
             <label>Bio</label>
             <input type="text" onChange={(event) => setUBio(event.target.value)}/>
-            <button onClick={addUser}>Submit</button>
+            <button onClick={addUser} type="submit">Submit</button>
         </form>
         </>
     )
@@ -70,7 +39,10 @@ const RegisterForm = (props) =>{
 export const LoginButton = () => {
     const {loginWithRedirect, isAuthenticated} = useAuth0();
     return(
-        !isAuthenticated &&(
+      <>
+        {!isAuthenticated &&(
+          <>
+        <h1></h1>
         <div>
             <button onClick={() => loginWithRedirect()}>
                 Sign in
@@ -78,7 +50,10 @@ export const LoginButton = () => {
             </button>
 
         </div>
-    ))
+        </>
+    )}
+    </>
+    )
 }
 
 export const LogoutButton = () => {
@@ -96,33 +71,33 @@ export const LogoutButton = () => {
 
 }
 
-export const Profile = () => {
-    const {user, isAuthenticated} = useAuth0();
+export const Profile = (props) => {
+    
+    const [userid, setUserId] = useState("")
+    const [username, setUserName] = useState("")
+    const [userbio, setUserBio] = useState("")
+    Axios.get('http://localhost:3001/check'+props.id, {
+      params: {id: props.id},
+    }).then((res) =>{
+      const object = Object.values(JSON.parse(JSON.stringify(res)));
+      console.log(object[0][0]["username"])
+      setUserId(object[0][0]["userid"])
+      setUserName(object[0][0]["username"])
+      setUserBio(object[0][0]["bio"]) 
+    })
+    console.log(username, userbio)
+      if(userid !== props.id){
+        return(<RegisterForm id={props.id} authenticated={props.authenticated}/>)
+      }else{
+        return(
+          <>
+            <h1>Profile</h1>
+            <h2>{username}</h2>
+            <p>{userbio}</p>
+          </>
+        )
+      }
 
-    return(
 
-            isAuthenticated && (
-                userDataExists(user.sub) &&(
-                    <div>
-                        <img src={user.picture} alt={user.name} />
-                        <h2>{user.name}</h2>
-                        <p>{user.email}</p>
-                        <p>{user.sub}</p>
-                    </div>
-              )
-            ),
-            
-            isAuthenticated &&(
-                !userDataExists(user.sub) &&(
-                    <div>
-                    <RegisterForm id={user.sub}/>
-                    </div>
-                )
-              )
-    )
     
-    
-    
-    
-    
-}
+  };
