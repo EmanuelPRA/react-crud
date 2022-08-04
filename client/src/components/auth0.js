@@ -22,7 +22,7 @@ export const RegisterForm = (props) =>{
 
     
     return(
-        
+        props.authenticated &&(
         <>
         <h1>Register</h1>
         <form onSubmit ={ev =>{ev.preventDefault()}}>
@@ -33,6 +33,7 @@ export const RegisterForm = (props) =>{
             <button onClick={addUser} type="submit">Submit</button>
         </form>
         </>
+        )
     )
 } 
 
@@ -42,7 +43,7 @@ export const LoginButton = () => {
       <>
         {!isAuthenticated &&(
           <>
-        <h1></h1>
+        <h1>Log in</h1>
         <div>
             <button onClick={() => loginWithRedirect()}>
                 Sign in
