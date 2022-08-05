@@ -1,9 +1,12 @@
 const express = require('express')
+const fileUpload = require('express-fileupload')
 const app = express()
 const mysql = require('mysql')
 const cors = require('cors')
+const { json } = require('body-parser')
 
 app.use(cors());
+app.use(fileUpload());
 app.use(express.json())
 
 const db = mysql.createConnection({
@@ -12,6 +15,21 @@ const db = mysql.createConnection({
     password: '',
     database: 'twtclone'
 })
+
+app.post('/upload', (req, res) =>{
+    if(req.files === null){
+        return res.status(400).json({msg: 'nofile'})
+    }
+
+    const file = req.files.file;
+
+    file.mv('/home/arlemar/Documents/reactcrum/server/img', err =>{
+        if(err){
+            console.log(err)
+        }
+        res.json({fileName: file.name, filePath: `/img/${file.name}`})
+    });
+});
 
 
 app.get('/check:id', (req, res) =>{

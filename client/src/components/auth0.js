@@ -35,7 +35,11 @@ export const RegisterForm = (props) =>{
         </>
         )
     )
-} 
+}
+
+export const ImgUpload = () =>{
+  
+}
 
 export const LoginButton = () => {
     const {loginWithRedirect, isAuthenticated} = useAuth0();
