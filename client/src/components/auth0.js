@@ -34,7 +34,6 @@ export const RegisterForm = (props) =>{
             <input type="text" onChange={(event) => setUBio(event.target.value)}/>
             <button onClick={addUser} type="submit">Submit</button>
         </form>
-        <ImgUpload id={props.id}/>
         </>
         )
     )
