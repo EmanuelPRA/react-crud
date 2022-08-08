@@ -43,12 +43,7 @@ export const RegisterForm = (props) =>{
 export const ImgUpload = (props) =>(
 
   <Uploady destination={{ url: "http://localhost:3001/upload" + props.id}} >
-  <UploadDropZone onDragOverClassName="drag-over"
-                        grouped
-                        maxGroupSize={3}
-        >
-            <span>Drag Drop File(s) Here</span>            
-        </UploadDropZone>
+  <UploadButton/>
   </Uploady>
 )
 
