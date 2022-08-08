@@ -16,19 +16,30 @@ const db = mysql.createConnection({
     database: 'twtclone'
 })
 
-app.post('/upload', (req, res) =>{
+app.post('/upload:Id', (req, res) =>{
     if(req.files === null){
         return res.status(400).json({msg: 'nofile'})
     }
-
+    id = req.params.Id
+    const filePath = "/home/arlemar/Documents/reactcrum/client/src/img/" + ".jpg" 
     const file = req.files.file;
-
-    file.mv('/home/arlemar/Documents/reactcrum/server/img', err =>{
+    console.log(__dirname)
+    file.mv(filePath, err =>{
+        console.log(req.files.file.name)
         if(err){
             console.log(err)
         }
         res.json({fileName: file.name, filePath: `/img/${file.name}`})
     });
+    db.query("UPDATE users SET pfp = (?) WHERE userid = (?)", 
+    [filePath, id], (err, result) => {
+        if(err){
+            console.log(err)
+        }else{
+            res.send("Values inserted")
+        }
+    })
+
 });
 
 

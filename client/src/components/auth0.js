@@ -1,6 +1,8 @@
 import {useAuth0} from '@auth0/auth0-react';
 import React, { useState } from 'react';
 import Axios from 'axios';
+import Uploady from "@rpldy/uploady";
+import UploadButton from "@rpldy/upload-button";
 
 export const RegisterForm = (props) =>{
     const [uName, setUName] = useState('')
@@ -19,7 +21,6 @@ export const RegisterForm = (props) =>{
         }
       })
       }
-
     
     return(
         props.authenticated &&(
@@ -37,9 +38,12 @@ export const RegisterForm = (props) =>{
     )
 }
 
-export const ImgUpload = () =>{
-  
-}
+export const ImgUpload = (props) =>(
+
+  <Uploady destination={{ url: "http://localhost:3001/upload" + props.id}} >
+  <UploadButton/>
+  </Uploady>
+)
 
 export const LoginButton = () => {
     const {loginWithRedirect, isAuthenticated} = useAuth0();
@@ -81,6 +85,7 @@ export const Profile = (props) => {
     const [userid, setUserId] = useState("")
     const [username, setUserName] = useState("")
     const [userbio, setUserBio] = useState("")
+    const [userpfp, setUserPfp] = useState("")
     Axios.get('http://localhost:3001/check'+props.id, {
       params: {id: props.id},
     }).then((res) =>{
@@ -89,6 +94,7 @@ export const Profile = (props) => {
       setUserId(object[0][0]["userid"])
       setUserName(object[0][0]["username"])
       setUserBio(object[0][0]["bio"]) 
+      setUserPfp(object[0][0]["pfp"]) 
     })
     console.log(username, userbio)
       if(userid !== props.id){
@@ -96,6 +102,7 @@ export const Profile = (props) => {
       }else{
         return(
           <>
+            <img src={require('/img/1002228400-photo-u1.jpeg.jpg')}/>
             <h1>Profile</h1>
             <h2>{username}</h2>
             <p>{userbio}</p>
