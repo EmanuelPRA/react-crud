@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Axios from 'axios';
 import Uploady from "@rpldy/uploady";
 import UploadButton from "@rpldy/upload-button";
+import UploadDropZone from "@rpldy/upload-drop-zone";
 
 export const RegisterForm = (props) =>{
     const [uName, setUName] = useState('')
@@ -33,6 +34,7 @@ export const RegisterForm = (props) =>{
             <input type="text" onChange={(event) => setUBio(event.target.value)}/>
             <button onClick={addUser} type="submit">Submit</button>
         </form>
+        <ImgUpload id={props.id}/>
         </>
         )
     )
@@ -41,7 +43,12 @@ export const RegisterForm = (props) =>{
 export const ImgUpload = (props) =>(
 
   <Uploady destination={{ url: "http://localhost:3001/upload" + props.id}} >
-  <UploadButton/>
+  <UploadDropZone onDragOverClassName="drag-over"
+                        grouped
+                        maxGroupSize={3}
+        >
+            <span>Drag Drop File(s) Here</span>            
+        </UploadDropZone>
   </Uploady>
 )
 
@@ -102,7 +109,6 @@ export const Profile = (props) => {
       }else{
         return(
           <>
-            <img src={require('/img/1002228400-photo-u1.jpeg.jpg')}/>
             <h1>Profile</h1>
             <h2>{username}</h2>
             <p>{userbio}</p>
