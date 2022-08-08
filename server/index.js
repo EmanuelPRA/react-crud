@@ -18,19 +18,19 @@ const db = mysql.createConnection({
 
 app.post('/upload:Id', (req, res) =>{
     id = req.params.Id
-    const filePath = "/home/arlemar/Documents/reactcrum/client/src/img/" + ".jpg" 
+    const filePath = "/home/arlemar/Documents/reactcrum/client/src/img/" + req.files.file.name 
     const file = req.files.file;
     console.log(__dirname)
     file.mv(filePath, err =>{
 
         db.query("UPDATE users SET pfp = (?) WHERE userid = (?)", 
-            [filePath, id], (err, result) => {
+            [file.name, id], (err, result) => {
         if(err){
             console.log(err)
         }else{
             res.send("Values inserted")
         }
-        
+
     })
         console.log(req.files.file.name)
         if(err){

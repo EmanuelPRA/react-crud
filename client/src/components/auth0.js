@@ -104,6 +104,8 @@ export const Profile = (props) => {
       }else{
         return(
           <>
+            
+            <img src={require("/home/arlemar/Documents/reactcrum/client/src/img/" + userpfp)}/>
             <h1>Profile</h1>
             <h2>{username}</h2>
             <p>{userbio}</p>
