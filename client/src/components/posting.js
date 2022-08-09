@@ -13,7 +13,7 @@ const PostForm = (props) =>{
                 <input type="text"/>
                 <Uploady>
                     <UploadButton/>
-
+                    
                 </Uploady>
 
             </form>

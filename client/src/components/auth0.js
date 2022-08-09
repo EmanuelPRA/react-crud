@@ -109,6 +109,7 @@ export const Profile = (props) => {
         setUserPfp(object[0][0]["pfp"])
       }
     })
+    
     console.log(!firstTime)
       if(props.isAuthenticated){
         return(
