@@ -1,11 +1,12 @@
 import {useAuth0} from '@auth0/auth0-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import Uploady from "@rpldy/uploady";
 import UploadButton from "@rpldy/upload-button";
 import UploadDropZone from "@rpldy/upload-drop-zone";
 
 export const RegisterForm = (props) =>{
+    const [userCreated, SetUserCreated] = useState(false)
     const [uName, setUName] = useState('')
     const [uBio, setUBio] = useState('')
     function addUser() {
@@ -21,10 +22,11 @@ export const RegisterForm = (props) =>{
             console.log(err)
         }
       })
+      SetUserCreated(true)
       }
     
     return(
-        props.authenticated &&(
+        props.authenticated && !userCreated &&(
         <>
         <h1>Register</h1>
         <form onSubmit ={ev =>{ev.preventDefault()}}>
@@ -35,8 +37,12 @@ export const RegisterForm = (props) =>{
             <button onClick={addUser} type="submit">Submit</button>
         </form>
         </>
-        )
+        ),
+        props.authenticated && userCreated &&(
+          <ImgUpload id={props.id}/>
+          )
     )
+    
 }
 
 export const ImgUpload = (props) =>(
@@ -91,27 +97,31 @@ export const Profile = (props) => {
       params: {id: props.id},
     }).then((res) =>{
       const object = Object.values(JSON.parse(JSON.stringify(res)));
-      console.log(object[0][0]["username"])
-      setUserId(object[0][0]["userid"])
-      setUserName(object[0][0]["username"])
-      setUserBio(object[0][0]["bio"]) 
-      setUserPfp(object[0][0]["pfp"]) 
+      console.log("Result:" + object[0])
+      if(typeof object[0][0] !== 'undefined'){
+        
+        setUserId(object[0][0]["userid"])
+        setUserName(object[0][0]["username"])
+        setUserBio(object[0][0]["bio"]) 
+        setUserPfp(object[0][0]["pfp"])
+      }//why the fuck is this even executing when the res is false 
     })
-    console.log(username, userbio)
-      if(userid !== props.id){
-        return(<RegisterForm id={props.id} authenticated={props.authenticated}/>)
-      }else{
+    console.log(userid.length === 0)
+      
         return(
           <>
-            
+            {userid.length !== 0 &&(
+            <>
             <img src={require("/home/arlemar/Documents/reactcrum/client/src/img/" + userpfp)}/>
             <h1>Profile</h1>
             <h2>{username}</h2>
             <p>{userbio}</p>
+            </>
+            )}
+            {userid.length === 0 &&(<RegisterForm id={props.id}/>)}
           </>
         )
-      }
-
+      //terrible conditional rendering at it's finest
 
     
   };

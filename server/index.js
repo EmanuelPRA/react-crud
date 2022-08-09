@@ -44,14 +44,18 @@ app.post('/upload:Id', (req, res) =>{
 app.get('/check:id', (req, res) =>{
     const ident = req.params.id
     db.query("SELECT * FROM users WHERE userid='"+ [req.params.id]+"'", (err, result) =>{
-        if(result !== null){
+        if(result.length !== 0){
             res.send(result)
+            console.log(result)
+        }else{
+            console.log("null:" + result)
+            res.send(false)
         }
         if(err){
             console.log(err)
         }
     })
-})
+})//somebody please explain why when it return null it doesn't function on the front end
 
 app.post('/create', (req, res) => {
     

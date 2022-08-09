@@ -7,10 +7,10 @@ import { useState } from 'react';
 
 
 function App() {
-  const {isLoading, error, user, isAuthenticated} = useAuth0();
-  const {userid, SetUserId} = useState('');
+  const {isLoading, error} = useAuth0();
+  const {user, isAuthenticated} = useAuth0();
   if(isAuthenticated){
-    SetUserId(user.sub)
+    var userid = user.sub
   }
   console.log("Userid: " + userid)
   return (
@@ -21,9 +21,10 @@ function App() {
     {!error && !isLoading && (
       <>
         
-        <Profile id={user.sub} isAuthenticated={isAuthenticated}/>
+        <Profile id={userid} isAuthenticated={isAuthenticated}/>
         <LoginButton/>
         <LogoutButton/>
+
       </>
     )}
     
