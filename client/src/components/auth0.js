@@ -19,14 +19,14 @@ export const RegisterForm = (props) =>{
         console.log(res)
         }
         else{
-            console.log(err)
+          SetUserCreated(true)
+          this.forceUpdate();
         }
       })
-      SetUserCreated(true)
+      
       }
-    
+    if(!userCreated){
     return(
-        props.authenticated && !userCreated &&(
         <>
         <h1>Register</h1>
         <form onSubmit ={ev =>{ev.preventDefault()}}>
@@ -37,11 +37,18 @@ export const RegisterForm = (props) =>{
             <button onClick={addUser} type="submit">Submit</button>
         </form>
         </>
-        ),
-        props.authenticated && userCreated &&(
-          <ImgUpload id={props.id}/>
-          )
-    )
+        
+        
+        
+        
+        
+    )}else{
+      return(
+        <ImgUpload id={props.id}/>
+        )
+    }
+
+    
     
 }
 
@@ -107,12 +114,12 @@ export const Profile = (props) => {
       }//why the fuck is this even executing when the res is false 
     })
     console.log(userid.length === 0)
-      
+      if(props.isAuthenticated){
         return(
           <>
             {userid.length !== 0 &&(
             <>
-            <img src={require("/home/arlemar/Documents/reactcrum/client/src/img/" + userpfp)}/>
+            <img src={require("/home/arlemar/Documents/reactcrum/client/src/img/" + userpfp)} alt="some text"/>
             <h1>Profile</h1>
             <h2>{username}</h2>
             <p>{userbio}</p>
@@ -120,7 +127,7 @@ export const Profile = (props) => {
             )}
             {userid.length === 0 &&(<RegisterForm id={props.id}/>)}
           </>
-        )
+        )}
       //terrible conditional rendering at it's finest
 
     
