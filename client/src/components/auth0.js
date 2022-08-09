@@ -20,7 +20,6 @@ export const RegisterForm = (props) =>{
         }
         else{
           SetUserCreated(true)
-          this.forceUpdate();
         }
       })
       
@@ -37,10 +36,6 @@ export const RegisterForm = (props) =>{
             <button onClick={addUser} type="submit">Submit</button>
         </form>
         </>
-        
-        
-        
-        
         
     )}else{
       return(
@@ -100,6 +95,7 @@ export const Profile = (props) => {
     const [username, setUserName] = useState("")
     const [userbio, setUserBio] = useState("")
     const [userpfp, setUserPfp] = useState("")
+    const [firstTime, setFirstTime] = useState(true)
     Axios.get('http://localhost:3001/check'+props.id, {
       params: {id: props.id},
     }).then((res) =>{
@@ -111,21 +107,23 @@ export const Profile = (props) => {
         setUserName(object[0][0]["username"])
         setUserBio(object[0][0]["bio"]) 
         setUserPfp(object[0][0]["pfp"])
-      }//why the fuck is this even executing when the res is false 
+      }
     })
-    console.log(userid.length === 0)
+    console.log(!firstTime)
       if(props.isAuthenticated){
         return(
           <>
-            {userid.length !== 0 &&(
+          {userid.length === 0 && firstTime &&(<RegisterForm id={props.id}/>)}
+            
             <>
             <img src={require("/home/arlemar/Documents/reactcrum/client/src/img/" + userpfp)} alt="some text"/>
             <h1>Profile</h1>
             <h2>{username}</h2>
             <p>{userbio}</p>
+            <ImgUpload id={props.id}/>
             </>
-            )}
-            {userid.length === 0 &&(<RegisterForm id={props.id}/>)}
+            
+            
           </>
         )}
       //terrible conditional rendering at it's finest
