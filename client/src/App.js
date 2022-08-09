@@ -25,6 +25,16 @@ function App() {
         <LoginButton/>
         <LogoutButton/>
 
+      <div className='Navigation'>
+
+      <ul>
+      <li>Profile</li>
+      <li>Post</li>
+      <li>Feed</li>
+      </ul>
+
+      </div>
+
       </>
     )}
     
