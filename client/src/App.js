@@ -4,6 +4,7 @@ import {LoginButton, LogoutButton, Profile, ImgUpload} from './components/auth0'
 import {useAuth0} from "@auth0/auth0-react";
 import Spinner from './components/Loading';
 import { useState } from 'react';
+import { PostForm } from './components/posting';
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
       </ul>
 
       </div>
-
+      <PostForm/>
       </>
     )}
     

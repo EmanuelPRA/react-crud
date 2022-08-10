@@ -16,10 +16,10 @@ export const RegisterForm = (props) =>{
         bio: uBio  
       }).then((err, res) =>{
         if(err){
-        console.log(res)
+        console.log(err)
         }
         else{
-          SetUserCreated(true)
+          console.log(res)
         }
         if(typeof res !== "undefined"){
           window.location.reload(true)

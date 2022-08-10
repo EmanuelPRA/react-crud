@@ -40,6 +40,32 @@ app.post('/upload:Id', (req, res) =>{
 
 });
 
+app.post('/postinsert:id:body', (req, res) =>{
+    const id = req.params.id
+    const body = req.params.body
+    const filePath = "/home/arlemar/Documents/reactcrum/client/src/img/" + req.files.file.name 
+    const file = req.files.file;
+    file.mv(filePath, err =>{
+        if(err){
+            console.log(err)
+        }else{
+            db.query("INSERT INTO posts (posterid, post_text, post_image) VALUES (?,?,?)", [id, body, req.files.file.name], (error, result) =>{
+                if(result.length !== 0){
+                    res.send(result)
+                    console.log(result)
+                }else{
+                    console.log("null:" + result)
+                    res.send(false)
+                }
+                if(err){
+                    console.log(err)
+                }
+            })
+        }
+        
+        
+    })
+})
 
 app.get('/check:id', (req, res) =>{
     const ident = req.params.id
@@ -67,6 +93,7 @@ app.post('/create', (req, res) => {
         if(err){
             console.log(err)
         }else{
+            console.log(result)
             res.send("Values inserted")
         }
     })
