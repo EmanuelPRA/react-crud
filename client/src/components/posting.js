@@ -7,15 +7,17 @@ import UploadButton from "@rpldy/upload-button";
 
 const PostForm = (props) =>{
 
+    const [postBody, setPostBody] = useState("")
+
     return(
         <>
             <form>
-                <input type="text"/>
+                <input type="text" onChange={(event) => setPostBody(event.target.value)}/>
                 <Uploady>
                     <UploadButton/>
                     
                 </Uploady>
-
+                <input type="Submit" value="post"></input>
             </form>
         </>
     )

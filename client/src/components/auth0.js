@@ -21,6 +21,9 @@ export const RegisterForm = (props) =>{
         else{
           SetUserCreated(true)
         }
+        if(typeof res !== "undefined"){
+          window.location.reload(true)
+        }
       })
       
       }
@@ -28,12 +31,12 @@ export const RegisterForm = (props) =>{
     return(
         <>
         <h1>Register</h1>
-        <form onSubmit ={ev =>{ev.preventDefault()}}>
+        <form onSubmit ={ev =>{ev.preventDefault();addUser()}}>
             <label>Username</label>
             <input type="text" onChange={(event) => setUName(event.target.value)}/>
             <label>Bio</label>
             <input type="text" onChange={(event) => setUBio(event.target.value)}/>
-            <button onClick={addUser} type="submit">Submit</button>
+            <input type="submit" value="submit"></input>
         </form>
         </>
         
@@ -50,7 +53,7 @@ export const RegisterForm = (props) =>{
 export const ImgUpload = (props) =>(
 
   <Uploady destination={{ url: "http://localhost:3001/upload" + props.id}} >
-  <UploadButton/>
+  <UploadButton>Post a profile pic</UploadButton>
   </Uploady>
 )
 
@@ -94,15 +97,14 @@ export const Profile = (props) => {
     const [userid, setUserId] = useState("")
     const [username, setUserName] = useState("")
     const [userbio, setUserBio] = useState("")
-    const [userpfp, setUserPfp] = useState("")
-    const [firstTime, setFirstTime] = useState(true)
+    const [userpfp, setUserPfp] = useState("default-profile.jpg")
     Axios.get('http://localhost:3001/check'+props.id, {
       params: {id: props.id},
     }).then((res) =>{
       const object = Object.values(JSON.parse(JSON.stringify(res)));
-      console.log("Result:" + object[0])
+      
       if(typeof object[0][0] !== 'undefined'){
-        
+        console.log("Result:" + object[0][0]["pfp"])
         setUserId(object[0][0]["userid"])
         setUserName(object[0][0]["username"])
         setUserBio(object[0][0]["bio"]) 
@@ -110,14 +112,14 @@ export const Profile = (props) => {
       }
     })
     
-    console.log(!firstTime)
       if(props.isAuthenticated){
+        console.log("PFP:" + userpfp)
         return(
           <>
-          {userid.length === 0 && firstTime &&(<RegisterForm id={props.id}/>)}
+          {userid.length === 0 &&(<RegisterForm id={props.id}/>)}
             
             <>
-            <img src={require("/home/arlemar/Documents/reactcrum/client/src/img/" + userpfp)} alt="some text"/>
+            <img src={require('/home/arlemar/Documents/reactcrum/client/src/img/' + userpfp)} alt="some text"/>
             <h1>Profile</h1>
             <h2>{username}</h2>
             <p>{userbio}</p>
