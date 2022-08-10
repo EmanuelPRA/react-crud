@@ -16,7 +16,7 @@ export const PostForm = (props) =>{
             <form>
                 <input type="text" onChange={(event) => setPostBody(event.target.value)}/>
                 <Uploady destination={{ url: "http://localhost:3001/postinsert?id=" + props.id + "?body=" + postBody}}>
-                    <UploadButton/>
+                    <UploadButton onClick={ev => {ev.preventDefault()}}/>
                     
                 </Uploady>
             </form>

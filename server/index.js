@@ -55,10 +55,10 @@ app.post('/postinsert:id:body', (req, res) =>{
                     console.log(result)
                 }else{
                     console.log("null:" + result)
-                    res.send(false)
+                    
                 }
-                if(err){
-                    console.log(err)
+                if(error){
+                    console.log(error)
                 }
             })
         }
