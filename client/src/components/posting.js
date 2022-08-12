@@ -13,12 +13,12 @@ export const PostForm = (props) =>{
 
     return(
         <>
-            <form>
-                <input type="text" onChange={(event) => setPostBody(event.target.value)}/>
-                <Uploady destination={{ url: "http://localhost:3001/postinsert?id=" + props.id + "?body=" + postBody}}>
-                    <UploadButton onClick={ev => {ev.preventDefault()}}/>
-                    
-                </Uploady>
+            <form method="POST" action='http://localhost:3001/create' encType='multipart/form-data' onSubmit ={ev =>{ev.preventDefault()}}>
+                <textarea name="body" >Enter text here...</textarea>
+                <input type="file" name="file"></input>
+                <input type="hidden" name="id" value={props.id}></input>
+                <input type="submit" value="upload"></input>
+                
             </form>
         </>
     )

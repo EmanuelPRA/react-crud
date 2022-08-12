@@ -16,33 +16,9 @@ const db = mysql.createConnection({
     database: 'twtclone'
 })
 
-app.post('/upload:Id', (req, res) =>{
-    id = req.params.Id
-    const filePath = "/home/arlemar/Documents/reactcrum/client/src/img/" + req.files.file.name 
-    const file = req.files.file;
-    console.log(__dirname)
-    file.mv(filePath, err =>{
-
-        db.query("UPDATE users SET pfp = (?) WHERE userid = (?)", 
-            [file.name, id], (err, result) => {
-        if(err){
-            console.log(err)
-        }else{
-            res.send("Values inserted")
-        }
-
-    })
-        console.log(req.files.file.name)
-        if(err){
-            console.log(err)
-        }
-    });
-
-});
-
-app.post('/postinsert:id:body', (req, res) =>{
-    const id = req.params.id
-    const body = req.params.body
+app.post('/postinsert', (req, res) =>{
+    id = req.body.id
+    body = req.body.body
     const filePath = "/home/arlemar/Documents/reactcrum/client/src/img/" + req.files.file.name 
     const file = req.files.file;
     file.mv(filePath, err =>{
@@ -50,16 +26,9 @@ app.post('/postinsert:id:body', (req, res) =>{
             console.log(err)
         }else{
             db.query("INSERT INTO posts (posterid, post_text, post_image) VALUES (?,?,?)", [id, body, req.files.file.name], (error, result) =>{
-                if(result.length !== 0){
-                    res.send(result)
-                    console.log(result)
-                }else{
-                    console.log("null:" + result)
-                    
-                }
-                if(error){
-                    console.log(error)
-                }
+               if(error){
+                console.log(error)
+               }
             })
         }
         
@@ -84,18 +53,24 @@ app.get('/check:id', (req, res) =>{
 })//somebody please explain why when it return null it doesn't function on the front end
 
 app.post('/create', (req, res) => {
-    
+    const filePath = "/home/arlemar/Documents/reactcrum/client/src/img/" + req.files.file.name 
+    const file = req.files.file;
     const id = req.body.id;
     const username = req.body.username;
     const bio = req.body.bio;
-    db.query("INSERT INTO users (userid, username, bio) VALUES (?,?,?)", 
-    [id, username, bio], (err, result) => {
+    file.mv(filePath, err =>{
         if(err){
             console.log(err)
         }else{
-            console.log(result)
-            res.send("Values inserted")
+            db.query("INSERT INTO users (userid, username, bio, pfp) VALUES (?,?,?)", 
+            [id, username, bio, file.name], (error, result) =>{
+               if(error){
+                console.log(error)
+               }
+            })
         }
+        
+        
     })
 
 })

@@ -6,56 +6,25 @@ import UploadButton from "@rpldy/upload-button";
 import UploadDropZone from "@rpldy/upload-drop-zone";
 
 export const RegisterForm = (props) =>{
-    const [userCreated, SetUserCreated] = useState(false)
-    const [uName, setUName] = useState('')
-    const [uBio, setUBio] = useState('')
-    function addUser() {
-        Axios.post('http://localhost:3001/create', {
-        id: props.id,
-        username: uName,
-        bio: uBio  
-      }).then((err, res) =>{
-        if(err){
-        console.log(err)
-        }
-        else{
-          console.log(res)
-        }
-        if(typeof res !== "undefined"){
-          window.location.reload(true)
-        }
-      })
-      
-      }
-    if(!userCreated){
     return(
         <>
         <h1>Register</h1>
-        <form onSubmit ={ev =>{ev.preventDefault();addUser()}}>
+        <form method="POST" action='http://localhost:3001/postinsert' encType='multipart/form-data' onSubmit ={ev =>{ev.preventDefault()}}>
             <label>Username</label>
-            <input type="text" onChange={(event) => setUName(event.target.value)}/>
+            <input type="text" name="username"/>
             <label>Bio</label>
-            <input type="text" onChange={(event) => setUBio(event.target.value)}/>
-            <input type="submit" value="submit"></input>
+            <textarea name='bio'/>
+            <input type="file" name="pfp"></input>
+            <input type="hidden" name="id" value={props.id}></input>
+            <input type="submit" value="upload"></input>
         </form>
         </>
         
-    )}else{
-      return(
-        <ImgUpload id={props.id}/>
-        )
-    }
+    )
 
     
     
 }
-
-export const ImgUpload = (props) =>(
-
-  <Uploady destination={{ url: "http://localhost:3001/upload" + props.id}} >
-  <UploadButton>Post a profile pic</UploadButton>
-  </Uploady>
-)
 
 export const LoginButton = () => {
     const {loginWithRedirect, isAuthenticated} = useAuth0();
@@ -123,7 +92,6 @@ export const Profile = (props) => {
             <h1>Profile</h1>
             <h2>{username}</h2>
             <p>{userbio}</p>
-            <ImgUpload id={props.id}/>
             </>
             
             
