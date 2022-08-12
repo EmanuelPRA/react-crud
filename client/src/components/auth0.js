@@ -11,7 +11,7 @@ export const RegisterForm = (props) =>{
         <h1>Register</h1>
         <form method="POST" action='http://localhost:3001/create' encType='multipart/form-data' onSubmit ={ev =>{ev.preventDefault()}}>
             <label>Username</label>
-            <input type="text" name="username"/>
+            <input type="text" name="username" required/>
             <label>Bio</label>
             <textarea name='bio'/>
             <input type="file" name="pfp"></input>
