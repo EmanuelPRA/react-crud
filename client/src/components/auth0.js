@@ -9,7 +9,7 @@ export const RegisterForm = (props) =>{
     return(
         <>
         <h1>Register</h1>
-        <form method="POST" action='http://localhost:3001/postinsert' encType='multipart/form-data' onSubmit ={ev =>{ev.preventDefault()}}>
+        <form method="POST" action='http://localhost:3001/create' encType='multipart/form-data' onSubmit ={ev =>{ev.preventDefault()}}>
             <label>Username</label>
             <input type="text" name="username"/>
             <label>Bio</label>
