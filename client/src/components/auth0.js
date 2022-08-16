@@ -1,15 +1,17 @@
 import {useAuth0} from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-import Uploady from "@rpldy/uploady";
-import UploadButton from "@rpldy/upload-button";
-import UploadDropZone from "@rpldy/upload-drop-zone";
 
 export const RegisterForm = (props) =>{
     return(
         <>
         <h1>Register</h1>
-        <form method="POST" action='http://localhost:3001/create' encType='multipart/form-data' onSubmit ={ev =>{ev.preventDefault()}}>
+        <form method="POST" action='http://localhost:3001/create' encType='multipart/form-data' onSubmit ={ev =>{
+          ev.preventDefault();
+          window.location.reload(true)
+          }}>
+
+
             <label>Username</label>
             <input type="text" name="username" required/>
             <label>Bio</label>

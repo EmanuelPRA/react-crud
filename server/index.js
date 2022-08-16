@@ -29,6 +29,9 @@ app.post('/postinsert', (req, res) =>{
                if(error){
                 console.log(error)
                }
+               else{
+                res.send(result)
+               }
             })
         }
         
@@ -73,6 +76,21 @@ app.post('/create', (req, res) => {
         
     })
 
+})
+
+app.get('/feed', (req, res) =>{
+    db.query("SELECT * FROM posts ORDER BY post_time DESC;", (err, result) => {
+        if(result.length !== 0){
+            res.send(result)
+            console.log(result)
+        }else{
+            console.log("null:" + result)
+            res.send(false)
+        }
+        if(err){
+            console.log(err)
+        }
+    })
 })
 
 

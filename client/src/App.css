@@ -12,3 +12,13 @@
   margin: 10px 0px;
 }
 
+
+Profile{
+  max-height: 60vh;
+}
+
+Profile img{
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+}
