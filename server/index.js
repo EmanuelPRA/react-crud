@@ -30,7 +30,7 @@ app.post('/postinsert', (req, res) =>{
                 console.log(error)
                }
                else{
-                res.send(result)
+                console.log(result)
                }
             })
         }
