@@ -9,18 +9,23 @@ export const Feed = () =>{
 
 
         const object = Object.values(JSON.parse(JSON.stringify(res)))
-        console.log(object[0][0])
-        object[0].forEach(element => {
-          posts.push(element)
+        console.log(object[0])
+        object[0].forEach((element, index) => {
+          
+          posts.push([element['posterid'], element['post_text'],element['post_image']])
         });
     });
+    posts.forEach((element) =>{
+      element.forEach((e) =>{
+        console.log(e)
+      })
+    })
     
-    console.log(posts["posterid"])
     return(
     <>
     <h1>Feed</h1>
         <div className="post">
-          <h1>{"text: "+posts}</h1>
+          <h1>{"text: " + "shit"}</h1>
           </div>
 
     </>
