@@ -7,9 +7,9 @@ import { useState } from 'react';
 import { PostForm } from './components/posting';
 import {Feed} from './components/feed';
 
-const profilebtn = require("/home/arlemar/Documents/reactcrum/client/src/img/profilebtn.svg")
-const feedbtn = require("/home/arlemar/Documents/reactcrum/client/src/img/feedbtn.svg")
-const postbtn = require("/home/arlemar/Documents/reactcrum/client/src/img/postbtn.svg")
+const profilebtn = require("/home/arlemar/Documents/reactcrum/client/src/img/profilebtn.svg");
+const feedbtn = require("/home/arlemar/Documents/reactcrum/client/src/img/feedbtn.svg");
+const postbtn = require("/home/arlemar/Documents/reactcrum/client/src/img/postbtn.svg");
 
 function App() {
   const {isLoading, error} = useAuth0();
