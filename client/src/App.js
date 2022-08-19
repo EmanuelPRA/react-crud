@@ -7,6 +7,9 @@ import { useState } from 'react';
 import { PostForm } from './components/posting';
 import {Feed} from './components/feed';
 
+const profilebtn = require("/home/arlemar/Documents/reactcrum/client/src/img/profilebtn.svg")
+const feedbtn = require("/home/arlemar/Documents/reactcrum/client/src/img/feedbtn.svg")
+const postbtn = require("/home/arlemar/Documents/reactcrum/client/src/img/postbtn.svg")
 
 function App() {
   const {isLoading, error} = useAuth0();
@@ -22,18 +25,18 @@ function App() {
     <>
     <div className="column">
     {error && <p>Authentication Error</p>}
-    {!error && isLoading && <Spinner/>}
+    {!error && isLoading && <Spinner className="spinner"/>}
     {!error && !isLoading && (
       <>
         {page === 'profile' &&(
         <>
-        <Profile id={userid} isAuthenticated={isAuthenticated}/>
+        <Profile id={userid} isAuthenticated={isAuthenticated} className='profile'/>
         <LoginButton/>
         <LogoutButton/>
         </>)}
         {page === 'post' &&(
         <>
-        <PostForm id={userid}/>
+        <PostForm id={userid} className='form-upload'/>
         </>)}
 
         {page === 'feed' &&(
@@ -45,10 +48,10 @@ function App() {
 
       <div className='Navigation'>
 
-      <ul>
-      <li><button onClick={() => {setPage("profile")}}>Profile</button></li>
-      <li><button onClick={() =>{setPage("post")}}>Post</button></li>
-      <li><button onClick={() =>{setPage("feed")}}>Feed</button></li>
+      <ul className='navigation'>
+      <li><img src={profilebtn} alt="Go to Profile" onClick={() => {setPage("profile")}}/></li>
+      <li><img src={postbtn} alt="Go to Post" onClick={() =>{setPage("post")}}/></li>
+      <li><img src={feedbtn} alt="Go to Feed" onClick={() =>{setPage("feed")}}/></li>
       </ul>
 
       </div>

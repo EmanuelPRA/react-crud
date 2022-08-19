@@ -1,12 +1,12 @@
 import {useAuth0} from '@auth0/auth0-react';
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import Axios from 'axios';
 
 export const RegisterForm = (props) =>{
     return(
         <>
         <h1>Register</h1>
-        <form method="POST" action='http://localhost:3001/create' encType='multipart/form-data' onSubmit ={ev =>{
+        <form className='register-form' method="POST" action='http://localhost:3001/create' encType='multipart/form-data' onSubmit ={ev =>{
           ev.preventDefault();
           window.location.reload(true)
           }}>
@@ -90,10 +90,12 @@ export const Profile = (props) => {
           {userid.length === 0 &&(<RegisterForm id={props.id}/>)}
             
             <>
-            <img src={require('/home/arlemar/Documents/reactcrum/client/src/img/' + userpfp)} alt="some text"/>
-            <h1>Profile</h1>
-            <h2>{username}</h2>
-            <p>{userbio}</p>
+            <div className='profile'>
+            <div className='name-pfp'>
+            <img src={require('/home/arlemar/Documents/reactcrum/client/src/img/' + userpfp)} alt="some text" className='pfp'/>
+            <h2>{username}</h2></div>
+            <p className='bio'>{userbio}</p>
+            </div>
             </>
             
             
