@@ -31,8 +31,8 @@ function App() {
         {page === 'profile' &&(
         <>
         <Profile id={userid} isAuthenticated={isAuthenticated} className='profile'/>
-        <LoginButton/>
-        <LogoutButton/>
+        <LoginButton className="btn"/>
+        <LogoutButton className="btn"/>
         </>)}
         {page === 'post' &&(
         <>
