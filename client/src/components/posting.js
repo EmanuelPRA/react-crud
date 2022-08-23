@@ -8,7 +8,7 @@ export const PostForm = (props) =>{
 
         
         <div className="post-wrapper">
-            <form method="POST" action={'http://localhost:3001/postinsert'} encType='multipart/form-data'>
+            <form method="POST" action={'http://localhost:3001/postinsert'} encType='multipart/form-data' /*onsubmit={(ev) => {ev.preventDefault()}}*/>
             <h1>ADD A POST</h1>
                 <textarea name="body" placeholder="Description..."/>
                 <input className="file-input" type="file" name="file" id="file" required style={divStyle} accept=".jpg,.png,.svg,.webp"></input>

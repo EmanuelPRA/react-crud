@@ -25,7 +25,7 @@ export const Feed = () =>{
     <>
     <h1>Feed</h1>
         <div className="post">
-          <h1>{"text: " + "shit"}</h1>
+          <h1>{"text: "}</h1>
           </div>
 
     </>
