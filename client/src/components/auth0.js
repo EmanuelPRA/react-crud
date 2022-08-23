@@ -49,16 +49,46 @@ export const LoginButton = () => {
 }
 
 export const LogoutButton = () => {
-    const {logout, isAuthenticated} = useAuth0();
-    return(
-        isAuthenticated &&(
-        <div>
-            <button onClick={() => logout()}>
-                Sign out
-            </button>
+  const {logout, isAuthenticated} = useAuth0();
+  return(
+      isAuthenticated &&(
+      <div>
+          <button onClick={() => logout()}>
+              Sign out
+          </button>
 
-        </div>
-    ))
+      </div>
+  ))
+
+
+}
+
+
+export const DeleteAccountBtn = (props) => {
+  const {logout, isAuthenticated} = useAuth0();
+
+  function deleteAcc(id){
+    Axios.post('http://localhost:3001/userdelete', {
+      firstName: id,
+      
+    })
+    .then(function (response) {
+      logout();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  return(
+      isAuthenticated &&(
+      <div>
+          <button onClick={() => deleteAcc(props.id)}>
+              Delete Account
+          </button>
+
+      </div>
+  ))
 
 
 }
@@ -95,6 +125,7 @@ export const Profile = (props) => {
             <img src={require('/home/arlemar/Documents/reactcrum/client/src/img/' + userpfp)} alt="some text" className='pfp'/>
             <h2>{username}</h2></div>
             <p className='bio'>{userbio}</p>
+            <DeleteAccountBtn id={userid}/>
             </div>
             </>
             

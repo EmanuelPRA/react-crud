@@ -39,6 +39,9 @@ app.post('/postinsert', (req, res) =>{
     })
 })
 
+
+
+
 app.get('/check:id', (req, res) =>{
     const ident = req.params.id
     db.query("SELECT * FROM users WHERE userid='"+ [req.params.id]+"'", (err, result) =>{
@@ -93,6 +96,17 @@ app.get('/feed', (req, res) =>{
     })
 })
 
+
+app.post('/userdelete', (req, res) =>{
+    const ident = req.body.id
+    db.query("DELETE FROM users WHERE userid='"+ [req.body.id]+"'", (err, result) =>{
+        if(err){
+            console.log(err)
+        }else{
+            console.log("User deleted")
+        }
+    })
+})
 
 app.listen(3001, () =>
 {

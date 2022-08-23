@@ -1,6 +1,6 @@
 import './App.css';
 //import {useState} from "react";
-import {LoginButton, LogoutButton, Profile} from './components/auth0';
+import {LoginButton, LogoutButton, Profile, DeleteAccountBtn} from './components/auth0';
 import {useAuth0} from "@auth0/auth0-react";
 import Spinner from './components/Loading';
 import { useState } from 'react';
@@ -45,16 +45,16 @@ function App() {
         </>)}
         
         
+          {isAuthenticated &&(<div className='Navigation'>
 
-      <div className='Navigation'>
+<ul className='navigation'>
+<li><img src={profilebtn} alt="Go to Profile" onClick={() => {setPage("profile")}}/></li>
+<li><img src={postbtn} alt="Go to Post" onClick={() =>{setPage("post")}}/></li>
+<li><img src={feedbtn} alt="Go to Feed" onClick={() =>{setPage("feed")}}/></li>
+</ul>
 
-      <ul className='navigation'>
-      <li><img src={profilebtn} alt="Go to Profile" onClick={() => {setPage("profile")}}/></li>
-      <li><img src={postbtn} alt="Go to Post" onClick={() =>{setPage("post")}}/></li>
-      <li><img src={feedbtn} alt="Go to Feed" onClick={() =>{setPage("feed")}}/></li>
-      </ul>
-
-      </div>
+</div>)}
+      
       
       </>
     )}
