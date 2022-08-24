@@ -2,7 +2,7 @@ import Axios from 'axios';
 import React, {useState} from 'react';
 
 export const Feed = () =>{
-    let posts = [[]]
+    let posts = [{}]
 
     Axios.get('http://localhost:3001/feed', {
       }).then((res) =>{
@@ -10,25 +10,19 @@ export const Feed = () =>{
 
         const object = Object.values(JSON.parse(JSON.stringify(res)))
         console.log(object[0])
-        object[0].forEach((element, index) => {
           
-          posts.push([element['posterid'], element['post_text'],element['post_image']])
-        });
+         posts = object[0]
+         console.log(posts)
+        
     });
-    posts.forEach((element) =>{
-      element.forEach((e) =>{
-        console.log(e)
-      })
-    })
     
-    return(
-    <>
-    <h1>Feed</h1>
-        <div className="post">
-          <h1>{"text: "}</h1>
-          </div>
-
-    </>
-    )
-
-}
+    if(posts.length > 1){
+    console.log(posts)
+    posts.map((anObjectMapped, index) => {
+      return (
+          <p key={`${anObjectMapped.postText}_{anObjectMapped.email}`}>
+              {anObjectMapped.post_time} - {anObjectMapped.posterid}
+          </p>
+      );
+      }
+    )}}

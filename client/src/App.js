@@ -1,6 +1,6 @@
 import './App.css';
 //import {useState} from "react";
-import {LoginButton, LogoutButton, Profile, DeleteAccountBtn} from './components/auth0';
+import {LoginButton, LogoutButton, Profile} from './components/auth0';
 import {useAuth0} from "@auth0/auth0-react";
 import Spinner from './components/Loading';
 import { useState } from 'react';
