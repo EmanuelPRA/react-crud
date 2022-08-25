@@ -107,3 +107,17 @@ button:hover{
   padding: 25px;
   text-align: center;
 }
+.post{
+  display: flex;
+  flex-flow: column;
+  align-items: left;
+  width: 30%;
+}
+
+.feed{
+
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  
+}
