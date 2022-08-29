@@ -38,9 +38,6 @@ export const Feed = (props) =>{
             <p>{post_text}</p>
             <p>Posted By:{posterid}</p>
             <p>Posted On:{post_time}</p>
-          </div>
-
-          <div>
           <form onSubmit={handleSubmit} id="form">
           <input id='commentBody' name='commentBody' required key={id + "commentbox"} type="text" placeholder='Comment' onChange={(e) => {setFormData([id, props.id, e.target.value])}}/>
           <input key={id + "commentbtn"}type="submit" value="Submit Comment"/> 
