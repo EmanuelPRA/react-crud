@@ -41,7 +41,7 @@ function App() {
 
         {page === 'feed' &&(
         <>
-        <Feed/>
+        <Feed id={user.sub}/>
         </>)}
         
         

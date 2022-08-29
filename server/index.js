@@ -136,3 +136,9 @@ app.listen(3001, () =>
 {
     console.log('Server running')
 })
+
+/*SELECT userid, bio, pfp,
+post_text
+FROM users, posts
+WHERE userid = posterid AND 
+userid = "auth0|62ea3aae282570c0ea38715e";*/
